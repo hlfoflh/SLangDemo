@@ -1,0 +1,57 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "CMake: configure default",
+			"type": "process",
+			"command": "C:\\Program Files\\CMake\\bin\\cmake.exe",
+			"args": [
+				"--preset",
+				"default"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "CMake: build default",
+			"type": "process",
+			"command": "C:\\Program Files\\CMake\\bin\\cmake.exe",
+			"args": [
+				"--build",
+				"--preset",
+				"default"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"dependsOn": [
+				"CMake: configure default"
+			],
+			"dependsOrder": "sequence",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Slang: compile vector_add",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"New-Item -ItemType Directory -Force compiled-out\\shaders | Out-Null; & \"$env:VULKAN_SDK\\Bin\\slangc.exe\" Source\\Shaders\\vector_add.slang -entry computeMain -target spirv -profile spirv_1_5 -o compiled-out\\shaders\\vector_add.spv; & \"$env:VULKAN_SDK\\Bin\\spirv-val.exe\" compiled-out\\shaders\\vector_add.spv"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": "build",
+			"problemMatcher": []
+		}
+	]
+}

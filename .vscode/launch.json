@@ -1,0 +1,22 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug SLangDemo",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}\\compiled-out\\bin\\Debug\\SLangDemo.exe",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [
+				{
+					"name": "VULKAN_SDK",
+					"value": "D:\\CodeTools\\VulkanSDK\\1.4"
+				}
+			],
+			"console": "integratedTerminal",
+			"preLaunchTask": "CMake: build default"
+		}
+	]
+}

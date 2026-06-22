@@ -1,0 +1,69 @@
+# Local build and generated outputs
+compiled-out/
+build/
+generated/
+out/
+bin/
+obj/
+dist/
+
+# CMake local files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CMakeUserPresets.json
+compile_commands.json
+
+# Visual Studio local files
+.vs/
+*.user
+*.suo
+*.vcxproj.user
+
+# C/C++ build products
+*.obj
+*.o
+*.lib
+*.a
+*.dll
+*.so
+*.dylib
+*.exe
+*.ilk
+*.pdb
+*.exp
+
+# Shader and generated GPU artifacts
+*.spv
+*.dxil
+*.metallib
+*.wgsl.generated
+
+# Python local environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editor and OS noise
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
