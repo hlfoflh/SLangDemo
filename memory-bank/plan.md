@@ -6,27 +6,38 @@
 
 ## 长线规划
 
-### Phase 0: 环境与项目骨架
+### Phase 0: 环境与最小实验地基
 
-- 明确 C++/Vulkan、Slang CLI、SlangPy/Python 三条路径的最小依赖。
-- 建立目录结构、忽略规则、基础构建脚本和 shader 编译验证。
-- 形成第一个可重复运行的 compute shader 示例。
+- 保持 Windows-only、C++/Vulkan/Slang 的最小闭环。
+- 建立 shader 编译、Vulkan device、buffer/texture、dispatch、readback、图像/数值输出。
+- 建立实验入口、metrics 输出和最小数据资产约定。
+- 地基达到“能稳定跑一个 texture-space 实验”后立即进入实验，不提前铺大框架。
 
-### Phase 1: 最小前向渲染管线
+### Phase 1: Texture Fitting
 
-- 建立基础 scene/camera/material 数据表示。
-- 实现一个最小 raster 或 compute-based rendering pass。
-- 增加图像输出、debug capture、基础回归检查。
+- 固定 UV/quad 或简单 mesh，优化一张小 texture 匹配 reference。
+- 先用 texture-space MSE，随后加入简单 render-space loss。
+- 验证 Slang 自动微分或手写 backward 的梯度方向，加入有限差分对照。
+- 输出 loss curve、result image、gradient/debug image。
 
-### Phase 2: 可微分核心闭环
+### Phase 2: Neural Texture Compression
 
-- 选定一个小目标函数，例如单参数颜色/位置优化。
-- 使用 Slang 自动微分生成或调用梯度路径。
-- 加入有限差分对照，验证梯度方向和数值量级。
+- 使用 latent texture + tiny decoder 重建 target texture/material channels。
+- 在 Slang shader 中实现实时 decode 路径。
+- 比较 uncompressed、BCn/传统压缩、neural compressed。
+- 记录码率/显存、PSNR/SSIM/MSE、decode cost 和训练耗时。
 
-### Phase 3: 扩展实验
+### Phase 3: Render-Aware Material Compression
 
-- 接入更复杂的几何、材质、光照或 SDF/point/gaussian 表示。
-- 评估 C++ 原生管线与 Python/SlangPy 训练管线的边界。
-- 沉淀可复用模块、实验模板和测试基线。
+- 将 albedo/normal/roughness/metallic/AO 作为 material set 联合压缩。
+- 使用固定几何、相机、灯光，从最终 PBR shading 计算 render-space loss。
+- 评估 mip/random access/filtering 对质量和成本的影响。
+- 形成可复用实验模板和 benchmark 报告。
+
+### Phase 4: Optional Extensions
+
+- SlangPy/PyTorch 快速训练路径。
+- Mesh/material fitting 或 light/pose fitting。
+- Triangle/gaussian/splat 表示只作为后续可选方向，不抢占神经纹理压缩主线。
+
 

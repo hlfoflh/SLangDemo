@@ -6,7 +6,7 @@
 
 ## 当前目标
 
-建立 Slang 可微渲染 demo 的初始项目记忆区，并完成第一轮环境与架构判断。
+围绕 render-aware neural texture/material compression 搭建最小可微渲染实验地基。
 
 ## 已确认环境
 
@@ -26,8 +26,10 @@
 - 现有 Vulkan/Slang SDK 足够开始做 shader 编译、SPIR-V 生成与基础 Vulkan 能力验证。
 - 若走 C++/Vulkan 主机程序，已有可用 CMake；仍需确认 MSVC/Visual Studio Build Tools 或其他 C++ 编译器是否可从项目构建环境调用。
 - 若走 SlangPy/PyTorch 快速实验，需要补齐 Python 3.10+，之后再决定是否安装 PyTorch。
-- 当前暂定只支持 Windows 平台；不提前建立多平台层或通用 RHI 抽象。
+- 当前明确只支持 Windows 平台；不考虑多平台适配，不提前建立跨平台层或通用 RHI 抽象。
 - Python/SlangPy 保留为后续研究入口，但当前源码骨架先聚焦 C++/Vulkan。
+- 项目主线已确定为神经纹理/材质压缩，优先建立可测试、可对比、可迭代的实验闭环。
+- 地基只搭到实验需要的程度；实验过程中出现真实痛点后再扩展架构。
 
 ## ThirdParty 初始建议
 
@@ -63,6 +65,21 @@
 - 第一阶段建议吸收：Slang `hello-world`、`reflection-api`、`autodiff-texture`。
 - 第二阶段可参考：Slang `mlp-training`、SlangPy `simple_compute`、SlangPy `pathtracer`。
 
+## 主题决策
+
+- 主线：render-aware neural texture/material compression。
+- 第一实验：`TextureFit`，固定 UV/quad 或简单 mesh，优化 texture 匹配 reference。
+- 第二实验：`NeuralTextureCompression`，latent texture + tiny decoder，shader-side decode。
+- 第三实验：`RenderAwareMaterialCompression`，多通道 PBR material set 联合压缩并用最终 shading loss 评估。
+- 调研记录：`memory-bank/documents/2026-06-22-project-theme-neural-texture-compression.md`
+
+## 地基边界
+
+- 必须先具备：Slang 编译、Vulkan device、buffer/texture、dispatch、readback、metrics、实验入口。
+- 可以暂缓：窗口系统、编辑器 UI、完整 scene system、完整 render graph、Python training bridge。
+- 明确不做：Linux/macOS/移动端兼容层、多 API 通用 RHI。
+- 新增抽象必须服务于当前实验，不为假想未来一次性铺开。
+
 ## 当前验证
 
 - `Source/Shaders/vector_add.slang` 已用 `slangc` 编译到 `compiled-out/shaders/vector_add.spv`。
@@ -85,9 +102,10 @@
 ## 下一步候选任务
 
 - 建立最小 Windows/Vulkan compute host，运行 `Source/Shaders/vector_add.slang`。
+- 增加 readback 和 metrics 输出能力，形成第一个可测试 compute 闭环。
+- 设计 `TextureFit` 最小实验输入：小尺寸 reference texture、可优化 texture buffer、MSE loss。
 - 吸收 Slang 官方 `hello-world` 的 session/module/entry point/SPIR-V 生成流程，但先避免创建过重抽象层。
-- 参考 Slang `reflection-api`，为后续 descriptor/layout 自动绑定做准备。
-- 等出现真实需求后，再增量创建 loss/gradient/optimizer 文件；后续吸收 `autodiff-texture` 和 `mlp-training` 思路。
+
 
 
 

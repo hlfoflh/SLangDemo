@@ -42,7 +42,7 @@ SlangPy 示例更适合作为研究/训练快速通道：
 
 需要改造点：
 
-- 官方代码里 Vulkan 初始化和资源管理较手写，后续应迁移到本项目 `RHI/`。
+- 官方代码里 Vulkan 初始化和资源管理较手写，后续应迁移到本项目的 Windows/Vulkan runtime。
 - descriptor/layout 后续应结合 Slang reflection，而不是长期硬编码。
 
 ### Slang `reflection-api`
@@ -56,7 +56,7 @@ SlangPy 示例更适合作为研究/训练快速通道：
 
 对本项目价值：
 
-- 为 Slang module 到 Vulkan/RHI 资源绑定建立自动化基础。
+- 为 Slang module 到 Vulkan 资源绑定建立自动化基础。
 - 支撑后续 render/diff pass 的统一参数绑定。
 
 ### Slang `autodiff-texture`
@@ -108,13 +108,13 @@ SlangPy 示例更适合作为研究/训练快速通道：
 
 ### slang-rhi `triangle/base`
 
-适合参考 RHI 形状：
+适合参考 GPU 抽象和示例组织形状，但不代表本项目要建立通用 RHI：
 
 - device creation helper。
 - shader program/pipeline creation helper。
 - render pass/command encoder 使用方式。
 
-暂不建议作为项目依赖。若后续选择使用 `slang-rhi`，应作为明确架构决策，而不是隐式进入。
+暂不建议作为项目依赖。本项目明确只支持 Windows/Vulkan，不做多 API 通用 RHI。
 
 ## 建议引入顺序
 
@@ -125,6 +125,7 @@ SlangPy 示例更适合作为研究/训练快速通道：
 5. 引入 `reflection-api` 思路，替换硬编码 descriptor/layout。
 6. 等出现真实可微渲染需求后，再抽出 loss/gradient/optimizer 结构，参考 `autodiff-texture` 和 `mlp-training`。
 7. 可选建立 `Source/Python/` SlangPy simple compute，以便快速验证 shader 行为。
+
 
 
 

@@ -6,7 +6,7 @@
 
 ## 当前代码地图
 
-当前仓库已建立精简的 Windows-only 初始骨架。暂不引入多平台层或通用 RHI 抽象；后续模块按实际需求再创建。
+当前仓库已建立精简的 Windows-only 初始骨架。项目不考虑多平台支持，也不建立通用 RHI 抽象；后续模块按实际实验需求再创建。
 
 ```text
 SLangDemo/
@@ -29,11 +29,19 @@ SLangDemo/
 - 参数可使用 `In` 前缀表达输入语义，例如 `InConfig`。
 - 当前命名空间为 `SLangDR`。
 
+## 平台约束
+
+- 只支持 Windows。
+- 图形/计算后端优先使用 Vulkan。
+- 构建链面向 Visual Studio/MSVC + CMake。
+- 不为了 Linux/macOS/移动端或多 API 兼容提前设计抽象层。
+
 ## 维护规则
 
 - 只记录已经存在或基本确定会落地的结构。
 - 新增模块时补充其职责、主要输入输出、依赖方向。
 - 算法细节和实验笔记放入 `cur_execution_context.md` 或 `documents/`。
+
 
 
 
